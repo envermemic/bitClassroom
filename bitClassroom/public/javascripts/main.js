@@ -10,7 +10,9 @@ function checkEmail() {
 
     if (!filter.test(email)) {
         document.getElementById("emailError").innerHTML = "Invalid E-mail.";
-    } else {
+    } else if(email.search("@bitcamp.ba") == -1){
+        document.getElementById("emailError").innerHTML = "Must contains @bitcamp.ba";
+    }else if ( filter.test(email) && email.search("@bitcamp.ba")){
         document.getElementById("emailError").innerHTML = "";
     }
 }
@@ -30,7 +32,7 @@ function checkNameInput() {
 
         if (!filter.test(firstName)) {
             document.getElementById("nameError").innerHTML = "Only letters allowed.";
-        } else  if (firstName.length < 5){
+        } else  if (firstName.length < 4){
             document.getElementById("nameError").innerHTML = "Nick name is short";
         }else{
 
@@ -80,14 +82,14 @@ function checkPhone(){
 
 
         var phone = document.getElementById("home-phone").value;
-        var filter = /^[a-zA-Z]+$/;
+        var phoneno = /^\+?([0-9]{3})\)?[-. ]?([0-9]{2})[-. ]?([0-9]{3})[-. ]?([0-9]{3})$/;
 
-        if ( phone.length <10 || phone.length > 15){
-            document.getElementById("phoneCheck").innerHTML = "Enter correct form of phone number[ +387******** ]";
-        }else if (filter.test(phone)){
+        if (!(phone.length == 15)){
+            document.getElementById("phoneCheck").innerHTML = "Enter correct form of phone number[ +387-XX-XXX-XXX ]";
+        }else if (!(phone.match(phoneno))){
             document.getElementById("phoneCheck").innerHTML = "Enter only numbers";
 
-        }else if(phone.length >=10 && phone.length<=15 && !filter.test(phone)){
+        }else if(phone.length >=10 && phone.length<=15 && phone.match(phoneno)){
 
             document.getElementById("phoneCheck").innerHTML = "";
         }
@@ -97,16 +99,15 @@ function checkPhone(){
 function checkMobilePhone(){
 
 
-    var phone = document.getElementById("home-phone").value;
-    var filter = /^[a-zA-Z]+$/;
+    var phone = document.getElementById("mobile-phone").value;
+    var phoneno = /^\+?([0-9]{3})\)?[-. ]?([0-9]{2})[-. ]?([0-9]{3})[-. ]?([0-9]{3})$/;
 
-
-    if ( phone.length <10 || phone.length > 15){
-        document.getElementById("phoneCheck").innerHTML = "Enter correct form of phone number[ +387******** ]";
-    }else if (filter.test(phone)){
+    if (!(phone.length == 15)){
+        document.getElementById("mobilePhoneCheck").innerHTML = "Enter correct form of phone number[ +387-XX-XXX-XXX ]";
+    }else if (!(phone.match(phoneno))){
         document.getElementById("mobilePhoneCheck").innerHTML = "Enter only numbers";
 
-    }else if(phone.length >=10 && phone.length<=15 && !filter.test(phone)){
+    }else if(phone.length >=10 && phone.length<=15 && phone.match(phoneno)){
 
         document.getElementById("mobilePhoneCheck").innerHTML = "";
     }

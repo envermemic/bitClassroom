@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.google.common.annotations.VisibleForTesting;
+import models.Post;
 import models.user.User;
 import org.junit.*;
 
@@ -91,7 +93,95 @@ public class ApplicationTest {
         assertNull(u);
     }
 
+    @Test
+    public void testFindPostByID(){
+        User u = new User();
+        u.setEmail("email@email.com");
+        u.setPassword("password");
+        u.setFirstName("username");
+        u.save();
 
+        Post p = new Post();
+        p.setTitle("title");
+        p.setContent("content");
+        p.setUser(u);
+        p.setVisibleToMentors(true);
+        p.save();
+
+        Post post = Post.findPostById(1L);
+
+        assertEquals(post, p);
+    }
+
+    @Test
+    public void testFindPostByUser(){
+        User u = new User();
+        u.setEmail("email@email.com");
+        u.setPassword("password");
+        u.setFirstName("username");
+        u.save();
+
+        Post p = new Post();
+        p.setTitle("title");
+        p.setContent("content");
+        p.setUser(u);
+        p.setVisibleToMentors(true);
+        p.save();
+
+        List<Post> posts = Post.findPostsByUser(u);
+
+        assertNotNull(posts);
+        assertEquals(p, posts.get(0));
+    }
+
+    @Test
+    public void testFindAllPosts(){
+        User u = new User();
+        u.setEmail("email@email.com");
+        u.setPassword("password");
+        u.setFirstName("username");
+        u.save();
+
+        Post p = new Post();
+        p.setTitle("title");
+        p.setContent("content");
+        p.setUser(u);
+        p.setVisibleToMentors(true);
+        p.save();
+
+        User u1 = new User();
+        u1.setEmail("email1@email.com");
+        u1.setPassword("password1");
+        u1.setFirstName("username1");
+        u1.save();
+
+        Post p1 = new Post();
+        p1.setTitle("title1");
+        p1.setContent("content1");
+        p1.setUser(u1);
+        p1.setVisibleToMentors(false);
+        p1.save();
+
+        List<Post> posts = Post.findAllPosts();
+
+        assertEquals(2, posts.size());
+    }
+
+    @Test
+    public void testGetDate(){
+        User u = new User();
+        u.setEmail("email@email.com");
+        u.setPassword("password");
+        u.setFirstName("username");
+        u.save();
+
+        Post p = new Post();
+        p.setTitle("title");
+        p.setContent("content");
+        p.setUser(u);
+        p.setVisibleToMentors(true);
+        p.save();
+    }
 
 
 }

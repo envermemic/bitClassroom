@@ -10,7 +10,8 @@
             <label for="inputEmail" class="col-lg-2 control-label">
                 Email <abbr class="req" title="Login with &#64;bitcamp.ba email" style="color : red"> * </abbr></label>
             <div class="col-lg-6">
-                <input value="@userForm.bindFromRequest().field("email").value()" type="email" name="email" class="form-control" id="inputEmail" placeholder="name.surname&#64;bitcamp.ba" required>
+                <input value="@userForm.bindFromRequest().field("email").value()" type="email" name="email"  onblur="checkEmail()" class="form-control" id="inputEmail" placeholder="name.surname&#64;bitcamp.ba" required>
+                <span id="emailError" class="alert-warning " data-error-for="" ></span>
             </div>
         </div>
 
