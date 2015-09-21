@@ -20,21 +20,25 @@
                         <td>@courseUser.getCourse.getName</td>
                         <td>@courseUser.getUser.getFirstName @courseUser.getUser.getLastName</td>
                         <td>Inactive</td>
-                        <td><button id="approved@courseUser.getCourse.getId" class="btn btn-success btn-xs " type="submit" ><i class="glyphicon glyphicon-ok"></i></button></td>
-                        <td><button id="dissaproved@courseUser.getCourse.getId" class="btn btn-danger btn-xs " type="submit" ><i class="glyphicon glyphicon-remove"></i></button></td>
+                        <td><button id="approved" class="btn btn-success btn-xs " type="submit" ><i class="glyphicon glyphicon-ok"></i></button></td>
+                        <td><button id="dissaproved" class="btn btn-danger btn-xs " type="submit" ><i class="glyphicon glyphicon-remove"></i></button></td>
                         <td><input type="text" id="course" value="@courseUser.getId" hidden /></td>
                     </tr>
                 }
 
-                <script src="@routes.Assets.versioned("javascripts/jquery.min.js")"></script>
-                <script>
-        var user = $('#course').val();
+            }
+        </tbody>
+    </table>
 
+
+
+    <script src="@routes.Assets.versioned("javascripts/jquery.min.js")"></script>
+    <script>
+
+    var user = $('#course').val();
         $(document).ready(function() {
-            var idCourse = @courseUser.getCourse.getId;
 
-
-            $("#approved" + idCourse ).click(function() {
+            $("#approved").click(function() {
             console.log(user);
                 $.ajax({
                     type: "post",
@@ -44,7 +48,7 @@
                    window.location.href = '/admin/awaitlist';
                 })
             })
-             $("#dissaproved" + idCourse).click(function() {
+             $("#dissaproved").click(function() {
                  console.log(user);
                 $.ajax({
                     type: "post",
@@ -56,14 +60,6 @@
             })
         });
     </script>
-
-            }
-        </tbody>
-    </table>
-
-
-
-
 
 
 }

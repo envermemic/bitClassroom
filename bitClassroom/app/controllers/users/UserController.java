@@ -2,6 +2,7 @@ package controllers.users;
 
 import helpers.Authorization;
 import helpers.SessionHelper;
+import models.PrivateMessage;
 import models.user.User;
 import org.apache.commons.io.FileUtils;
 import org.joda.time.DateTime;
@@ -175,6 +176,34 @@ public class UserController extends Controller {
 
         flash("warning", "Your profile could not be updated. Please contact site administrator.");
         return redirect("/");
+    }
+
+
+    public  Result saveMessage(Long id) {
+
+        Form<User> boundForm = userForm.bindFromRequest();
+        User sender = SessionHelper.currentUser(ctx());
+        User receiver = User.findById(id);
+        String content;
+        try {
+            content = boundForm.bindFromRequest().field("content").value();
+        } catch (Exception e) {
+            flash("message_fail"," Message does not send");
+            return redirect("/");
+        }
+        PrivateMessage privMessage = PrivateMessage.create(content, sender, receiver);
+        receiver.getPrivateMessage().add(privMessage);
+        receiver.save();
+        if(receiver.getPrivateMessage().contains(privMessage))
+        {
+            flash("message_success", "Message is send."));
+        }
+        if(sender == null)
+        {
+            return redirect("/");
+        }
+
+        return redirect("/allMessages");
     }
 
 

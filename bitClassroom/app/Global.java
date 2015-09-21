@@ -4,6 +4,7 @@ import play.GlobalSettings;
 import play.libs.F;
 import play.mvc.Http;
 import play.mvc.Result;
+import utility.database.Courses;
 import utility.database.Roles;
 import utility.database.Users;
 
@@ -17,8 +18,9 @@ public class Global extends GlobalSettings {
 
     @Override
     public void onStart(Application application) {
-        Roles.saveAllRoles();
-        Users.saveUsers();
+        //Roles.saveAllRoles();
+        //Users.saveUsers();
+        //Courses.saveCourses();
 
     }
 
