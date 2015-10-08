@@ -78,6 +78,8 @@ public final class User extends Model {
     private List<Role> roles = new ArrayList<>();
     @OneToMany
     private List<Post> posts = new ArrayList<>();
+    @OneToMany
+    private List<Assignment> assignments = new ArrayList<>();
     @OneToMany(mappedBy="sender", cascade=CascadeType.ALL)
     private List<PrivateMessage> messages = new ArrayList<>();
 
@@ -311,6 +313,15 @@ public final class User extends Model {
     public String getFormattedUpdateDate() {
         DateTimeFormatter dtf = DateTimeFormat.forPattern("HH:mm (dd.MM.yyyy)");
         return dtf.print(updateDate);
+    }
+
+
+    public List<Assignment> getAssignments() {
+        return assignments;
+    }
+
+    public void setAssignments(List<Assignment> assignments) {
+        this.assignments = assignments;
     }
 
     public Integer getHomeworkStatus() {

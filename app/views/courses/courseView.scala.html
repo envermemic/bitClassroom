@@ -34,17 +34,25 @@
                                                     </h4>
                                                 </div>
                                                 <!--(User.findByName(course.getTeacher().substring(0, course.getTeacher().indexOf(' ')+ 1))).getRoles().get(0).getName.equals(UserConstants.TEACHER)-->
-                                                @if(post.getPostType == 1 && SessionHelper.currentUser(ctx()).getRoles.get(0).getName.equals(UserConstants.NAME_STUDENT) ) {
-                                                    @if(SessionHelper.currentUser(ctx()).getHomeworkStatus == 0 && post.getHomeworkPostStatus == null){
-                                                        <div class="col-sm-3">
-                                                            <h4 class="pull-right">
-                                                                <button id="sendStartMessage@post.getId" onclick="callAjax(@post.getId)" disabled="true">
-                                                                    Start</button>
-                                                            </h4>
-                                                        </div>
-                                                    }
 
-                                                    @if(post.getHomeworkPostStatus == 1) {
+                                                @if(post.getPostType == 1 && SessionHelper.currentUser(ctx()).getRoles.get(0).getName.equals(UserConstants.NAME_STUDENT) ) {
+                                                    @if(SessionHelper.currentUser(ctx()).getHomeworkStatus == 0){
+                                                       <!-- && post.getHomeworkPostStatus == null -->
+                                                        @for(ass <- post.getAssignments() ){
+                                                            @if(ass.getHomeworkPostStatus == 0 && ass.getStudent.getId.equals(SessionHelper.currentUser(ctx()).getId)){
+                                                                <div class="col-sm-3">
+                                                                    <h4 class="pull-right">
+                                                                        <button id="sendStartMessage@post.getId" onclick="callAjax(@post.getId)" disabled="true">
+                                                                            Start</button>
+                                                                    </h4>
+                                                                </div>
+                                                            }
+                                                        }
+
+
+                                                    }
+                                                @for(ass <- post.getAssignments()){
+                                                    @if(ass.getHomeworkPostStatus == 1 && ass.getStudent.getId.equals(SessionHelper.currentUser(ctx()).getId)){
                                                         <div class="col-sm-3">
                                                             <h4 class="pull-right">
                                                                 <label id="label@post.getId">STARTED</label>
@@ -57,25 +65,30 @@
                                                         </div>
                                                     }
 
-                                                    @if(((SessionHelper.currentUser(ctx()).getHomeworkStatus == null) || (SessionHelper.currentUser(ctx()).getHomeworkStatus == 2)) && post.getHomeworkPostStatus == null){
+
+                                                    @if(((SessionHelper.currentUser(ctx()).getHomeworkStatus == 0) || (SessionHelper.currentUser(ctx()).getHomeworkStatus == 2)) && ass.getHomeworkPostStatus == 0) {
                                                         <div class="col-sm-3">
                                                             <h4 class="pull-right">
                                                                 <button id="sendStartMessage@post.getId" onclick="callAjax(@post.getId)">
                                                                     Start</button>
                                                             </h4>
                                                         </div>
+
                                                     }
 
-                                                    @if(post.getHomeworkPostStatus == 2){
-                                                            <div class="col-sm-3">
-                                                                <h4 class="pull-right">
-                                                                    <label id="label@post.getId">DONE</label>
-                                                                </h4>
-                                                            </div>
+
+
+                                                    @if(ass.getHomeworkPostStatus == 2) {
+                                                        <div class="col-sm-3">
+                                                            <h4 class="pull-right">
+                                                                <label id="label@post.getId">DONE</label>
+                                                            </h4>
+                                                        </div>
                                                     }
 
                                                 }
 
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -113,7 +126,8 @@
                         </div>
                     </div>
                 </div>
-    }
+            }
+            
         <script src="@routes.Assets.versioned("javascripts/jquery-ui.min.js")" type="text/javascript"></script>
         <script>
 
@@ -168,4 +182,5 @@
 
 
         </script>
+
     }
