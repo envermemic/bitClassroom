@@ -9,7 +9,11 @@
             <div class="col-sm-3" id="courseDiv">
 
                 <div class="thumbnail" style="max-height: 700px; max-width: 300px">
-                    <img src="@routes.Assets.versioned("/images/courses/"+ course.getImage)" alt="" style="width:280px; height: 200px">
+                    @if(course.getImage != null){
+                        <img src="@course.getImage.getSize(300,300)"/>
+                    }else{
+                        <img src="http://placehold.it/300x300"/>
+                    }
                     <div class="caption">
                         <input type="text" name="course-id" id="courseId@course.getId" value="@course.getId" hidden/>
                         <a href="#"><h2>@course.getName</h2>
