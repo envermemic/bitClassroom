@@ -194,3 +194,19 @@ GET           /open-Report/:id                      @controllers.users.AdminCont
 GET           /faq                                  @controllers.Application.faq()
 GET           /faq/setup                            @controllers.users.AdminController.setupFAQ()
 POST          /faq/setup                            @controllers.users.AdminController.saveFAQ()
+
+
+#=========== Calendar routes ==========================
+
+GET     /calendar                   @controllers.users.AdminController.calendar()
+GET     /events                     @controllers.users.AdminController.listEvents()
+GET     /events.json                @controllers.users.AdminController.json(start: Long ?= 0, end: Long ?= 0 )
+
+GET     /event/:id/edit             @controllers.users.AdminController.edit(id:Long)
+POST    /event/:id/update           @controllers.users.AdminController.update(id:Long)
+POST    /event                      @controllers.users.AdminController.add()
+GET     /event/new                  @controllers.users.AdminController.delete(id:Long)
+
+POST    /event-ajax                 @controllers.users.AdminController.addByAjax()
+POST    /event-move                 @controllers.users.AdminController.move()
+POST    /event-resize               @controllers.users.AdminController.resize()
